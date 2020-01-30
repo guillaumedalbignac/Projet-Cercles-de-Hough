@@ -15,7 +15,24 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_slider1_valueChanged(int value);
+
+    void on_slider2_valueChanged(int value);
+
+    void on_slider3_valueChanged(int value);
+
+    void trouverCercles();
+
+    void on_pushButton_clicked();
+
+    void on_slider4_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
+    int *greyRow;
+    int *cannyEdgeThreshold;
+    int *centerDetectionTreshold;
+    int *valeurContraste;
 };
 #endif // MAINWINDOW_H
