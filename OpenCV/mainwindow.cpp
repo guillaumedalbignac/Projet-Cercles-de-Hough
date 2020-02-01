@@ -27,7 +27,11 @@ MainWindow::MainWindow(QWidget *parent)
     valeurContraste = new int;
     *valeurContraste = ui->slider4->value();
 
-    trouverCercles();
+    //Si l'image n'est pas lu, on renvoie une erreur
+    if(image2.empty()){
+        qDebug() << "Erreur chargement image";
+    }
+    recalculer();
 }
 
 MainWindow::~MainWindow()
@@ -58,23 +62,13 @@ void MainWindow::on_slider4_valueChanged(int value)
 
 void MainWindow::on_pushButton_clicked()
 {
-    trouverCercles();
+    recalculer();
 }
 
-void MainWindow::trouverCercles(){
-    //Chargement et affichage de l'image
-    Mat image2 = imread("C:/Users/dalbi/Desktop/testPhoto/image2.jpg", IMREAD_COLOR);
-
-    if(image2.empty()){
-        qDebug() << "Erreur chargement image";
-    }
-
+void MainWindow::recalculer()
+{
     //Change le contraste
-    Mat grey;
-    //image2.convertTo(grey, -1, *valeurContraste/4, 0);
-
-    cv::threshold(image2, grey, 255, THRESH_BINARY, 127);
-
+    threshold(image2, grey, *valeurContraste, 255, THRESH_BINARY_INV); //THRESH_BINARY
     imshow("Contraste", grey);
 
     //Convertie en echelle de gris
@@ -85,26 +79,22 @@ void MainWindow::trouverCercles(){
     //imshow("Gris + Blur", grey);
 
     //Application de la transformation de cercle de Hough
-    /*vector<Vec3f> circles;
     HoughCircles(grey, circles, HOUGH_GRADIENT, 1, grey.rows/ *greyRow, *cannyEdgeThreshold, *centerDetectionTreshold, 0, 0);
 
     //Préparation des cercles détectés
-    for (size_t i = 0; i < circles.size(); i++){
-        Vec3i c = circles[i];
-        Point center = Point(c[0], c[1]);
+    for (i = 0; i < circles.size(); i++){
+        c = circles[i];
+        center = Point(c[0], c[1]);
         //Centre du cercle
         circle(image2, center, 1, Scalar(0,100,100), 3, LINE_AA);
         //Bordue du cercle
-        int radius = c[2];
+        radius = c[2];
         circle(image2, center, radius, Scalar(255,0,255), 3, LINE_AA);
-    }*/
+    }
 
     //Affichage des positions des cercles détectés
-    /*imshow("detected circles", image2);
-    int x = circles[0][0];
-    int y = circles[0][1];
-    qDebug() << x << " " << y;*/
+    //imshow("detected circles", image2);
+    x = circles[0][0];
+    y = circles[0][1];
+    qDebug() << x << " " << y;
 }
-
-
-
