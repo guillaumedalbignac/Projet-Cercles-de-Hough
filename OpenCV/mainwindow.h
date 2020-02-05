@@ -24,29 +24,13 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_slider1_valueChanged(int value);
 
-    void on_slider2_valueChanged(int value);
-
-    void on_slider3_valueChanged(int value);
-
-    void on_pushButton_clicked();
-
-    void on_slider4_valueChanged(int value);
-
-    void recalculer();
 
 private:
     Ui::MainWindow *ui;
 
-    //Pointeurs pour les sliders
-    int *greyRow;
-    int *cannyEdgeThreshold;
-    int *centerDetectionTreshold;
-    int *valeurContraste;
-
     //Chargement et affichage de l'image
-    Mat image2 = imread("C:/Users/dalbi/Desktop/testPhoto/image1.jpg", IMREAD_COLOR);
+    Mat image2 = imread("C:/Users/dalbi/Desktop/testPhoto/test1.jpg", IMREAD_COLOR);
     Mat grey;
 
     //Hough Transform
